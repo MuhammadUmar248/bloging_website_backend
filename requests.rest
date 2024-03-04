@@ -1,0 +1,10 @@
+
+
+
+POST http://localhost:3001/get-blog
+Content-Type: application/json
+
+{
+    "blog_id" : "FilmmakingUjnDlkQeVVEEfcNtBUXB3"
+}
+
