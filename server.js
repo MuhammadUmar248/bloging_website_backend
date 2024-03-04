@@ -24,7 +24,16 @@ let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for e
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
 server.use(express.json());
-server.use(cors());
+// server.use(cors());
+
+const corsOptions ={
+  // origin:'http://localhost:3000',
+  origin:'https://snazzy-puffpuff-405ea8.netlify.app', 
+
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 
 mongoose
   .connect(process.env.DB_Location, {
