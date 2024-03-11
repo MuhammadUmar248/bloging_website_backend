@@ -8,13 +8,11 @@ import cors from "cors";
 import admin from "firebase-admin";
 import ServiceAccountKey from "./react-js-blog-website-54638-firebase-adminsdk-q6iqz-82deb4dbcd.json" assert { type: "json" };
 import { getAuth } from "firebase-admin/auth";
-
 import User from "./Schema/User.js";
 import Blog from "./Schema/Blog.js";
 
 const server = express();
 const PORT = 3001;
-
 
 admin.initializeApp({
   credential: admin.credential.cert(ServiceAccountKey),
@@ -24,16 +22,8 @@ let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for e
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
 server.use(express.json());
-// server.use(cors());
+server.use(cors());
 
-const corsOptions ={
-  // origin:'http://localhost:3000',
-  origin:'https://snazzy-puffpuff-405ea8.netlify.app', 
-
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
 
 mongoose
   .connect(process.env.DB_Location, {
@@ -312,7 +302,7 @@ server.post("/search-blog", (req, res) => {
     findQuery = { author, draft: false };
   }
 
-  let maxLimit = 2;
+  let maxLimit = 4;
   Blog.find(findQuery)
     .populate(
       "author",
@@ -467,7 +457,9 @@ server.post("/get-blog", (req, res) => {
   .populate("author", "personal_info.fullname personal_info.username personal_info.profile_img")
   .select("title des content banner activity publishedAt blog_id tags")
   .then(blog => {
-    return res.status(200).json({ blog });
+      User.findOneAndUpdate({ "personal_info.username": blog.author.personal_info.username})
+
+      return  res.status(200).json({blog})
   })
   .catch((err) => {
     return res.json(500).json({ error: err.message });
