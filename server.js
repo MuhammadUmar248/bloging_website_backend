@@ -32,7 +32,13 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use(cors());
+server.use(cors({
+  origin: 'http://localhost:5173', // Allow requests from this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specified HTTP methods
+  credentials: true, // Allow including cookies and authentication headers
+  optionsSuccessStatus: 204, // Set the response status for preflight requests
+  allowedHeaders: 'Content-Type,Authorization', // Specify allowed headers
+}));
 
 
 mongoose
