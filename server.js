@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
 import cors from "cors";
 import admin from "firebase-admin";
-import ServiceAccountKey from "./react-js-blog-website-54638-firebase-adminsdk-q6iqz-82deb4dbcd.json" assert { type: "json" };
+// import ServiceAccountKey from "./react-js-blog-website-54638-firebase-adminsdk-q6iqz-6120c2e5ca.json" assert { type: "json" };
 import { getAuth } from "firebase-admin/auth";
 import User from "./Schema/User.js";
 import Blog from "./Schema/Blog.js";
@@ -14,8 +14,22 @@ import Blog from "./Schema/Blog.js";
 const server = express();
 const PORT = 3001;
 
+const serviceAccount = {
+  type: "service_account",
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+  client_id: process.env.FIREBASE_CLIENT_ID,
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL
+};
+
+
 admin.initializeApp({
-  credential: admin.credential.cert(ServiceAccountKey),
+  credential: admin.credential.cert(serviceAccount)
 });
 
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
