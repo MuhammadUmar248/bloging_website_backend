@@ -6,7 +6,6 @@ import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
 import cors from "cors";
 import admin from "firebase-admin";
-// import ServiceAccountKey from "./react-js-blog-website-54638-firebase-adminsdk-q6iqz-6120c2e5ca.json" assert { type: "json" };
 import { getAuth } from "firebase-admin/auth";
 import User from "./Schema/User.js";
 import Blog from "./Schema/Blog.js";
