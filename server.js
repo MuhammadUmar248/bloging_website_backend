@@ -45,8 +45,11 @@ server.use((req, res, next) => {
 });
 
 server.use(cors({
-  origin: 'http://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  origin: [
+    'http://localhost:5173',                     
+    'https://bloging-website-frontend.vercel.app'           
+  ],
+  methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
   credentials: true,
   optionsSuccessStatus: 204,
   allowedHeaders: 'Content-Type,Authorization',
@@ -54,6 +57,8 @@ server.use(cors({
 
 mongoose
   .connect(process.env.DB_Location, {
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 30000,   
     autoIndex: true,
   })
   .then((res) => {
