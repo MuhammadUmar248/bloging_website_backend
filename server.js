@@ -102,6 +102,11 @@ const generateUsername = async (email) => {
   return username;
 };
 
+app.get('/', (req, res) => {
+  res.send('Backend is up and running 🚀');
+});
+
+
 server.post("/signup", (req, res) => {
   console.log(req.body);
 
