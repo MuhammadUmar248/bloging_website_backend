@@ -102,7 +102,7 @@ const generateUsername = async (email) => {
   return username;
 };
 
-app.get('/', (req, res) => {
+server.get('/', (req, res) => {
   res.send('Backend is up and running 🚀');
 });
 
