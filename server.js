@@ -11,7 +11,7 @@ import User from "./Schema/User.js";
 import Blog from "./Schema/Blog.js";
 
 const server = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001; 
 
 const serviceAccount = {
   type: "service_account",
