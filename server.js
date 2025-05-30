@@ -488,6 +488,9 @@ server.post("/get-blog", (req, res) => {
     .populate("author", "personal_info.fullname personal_info.username personal_info.profile_img")
     .select("title des content banner activity publishedAt blog_id tags")
     .then(blog => {
+      if (!blog) {
+        return res.status(404).json({ error: "Blog not found" }); // Handle null case
+      }
       User.findOneAndUpdate({ "personal_info.username": blog.author.personal_info.username})
       return res.status(200).json({blog})
     })
